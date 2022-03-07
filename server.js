@@ -5,6 +5,6 @@ const discsRoute = require('./routes/discs');
 const app = express();
 app.use(express.json());
 app.use('/', homeRoute);
-app.use('/discs', discsRoute);
+app.use('/api/discs', discsRoute);
 
 app.listen(3000, () => console.log("Server ready"));

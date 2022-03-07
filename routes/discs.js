@@ -24,29 +24,34 @@ mongo.connect(
 );
 const router = express.Router();
 
-//Get discs
+//Get disc by find query
 router.get("/", (req, res) => {
-  discs.find().toArray((err, items) => {
+  var urlQuery = require('url').parse(req.url,true).query;
+  var findQuery = convertIntObj(urlQuery);
+  console.log(findQuery);
+  discs.find(findQuery).toArray((err, items) => {
     if (err) {
       console.error(err);
-      res.status(500).json({ err: err });
+      res.status(500).send(err);
       return
     };
-    res.status(200).json({ discs: items });
+    res.status(200).send(items);
   });
 });
+
 
 //Get disc by id
 router.get("/:id", (req, res) => {
   discs.find({ _id: new ObjectId(req.params.id) }).toArray((err, items) => {
     if (err) {
       console.error(err);
-      res.status(500).json({ err: err });
+      res.status(500).send(err);
       return
     };
     res.status(200).send(items[0]);
   });
 });
+
 
 //Post to discs
 router.post("/", (req, res) => {
@@ -65,7 +70,7 @@ router.post("/", (req, res) => {
       (err, result) => {
       if (err) {
           console.error(err);
-          res.status(500).json({ err: err });
+          res.status(500).send(err);
           return
       };
       console.log(result);
@@ -81,3 +86,37 @@ router.delete("/:id", (req, res) => {
 });
 
 module.exports = router;
+
+
+//Helping functions
+function toTitleCase(str) {
+  return str.replace(
+    /\w\S*/g,
+    function(txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    }
+  );
+}
+
+function isEmpty(obj) {
+  for(var prop in obj) {
+    if(Object.prototype.hasOwnProperty.call(obj, prop)) {
+      return false;
+    }
+  }
+
+  return JSON.stringify(obj) === JSON.stringify({});
+}
+
+function convertIntObj(obj) {
+  const res = {}
+  for (const key in obj) {
+      var keyInt = parseInt(obj[key]);
+      res[key] = keyInt;
+
+      console.log(typeof keyInt);
+      res[key] = obj[key];
+      console.log(obj[key]);
+  }
+  return res;
+}
