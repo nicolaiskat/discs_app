@@ -28,7 +28,6 @@ const router = express.Router();
 router.get("/", (req, res) => {
   var urlQuery = require('url').parse(req.url,true).query;
   var findQuery = convertIntObj(urlQuery);
-  console.log(findQuery);
   discs.find(findQuery).toArray((err, items) => {
     if (err) {
       console.error(err);
@@ -74,7 +73,10 @@ router.post("/", (req, res) => {
           return
       };
       console.log(result);
-      res.status(200).json({ ok: true });
+      res.status(200).json({ 
+          ok: true,
+          object: result
+        });
   });
 });
 
@@ -111,12 +113,8 @@ function isEmpty(obj) {
 function convertIntObj(obj) {
   const res = {}
   for (const key in obj) {
-      var keyInt = parseInt(obj[key]);
+      var keyInt = isNaN(parseInt(obj[key])) ? obj[key] : parseInt(obj[key]);
       res[key] = keyInt;
-
-      console.log(typeof keyInt);
-      res[key] = obj[key];
-      console.log(obj[key]);
   }
   return res;
 }
