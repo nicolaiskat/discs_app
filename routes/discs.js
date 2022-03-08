@@ -28,14 +28,17 @@ const router = express.Router();
 router.get("/", (req, res) => {
   var urlQuery = require('url').parse(req.url,true).query;
   var findQuery = convertIntObj(urlQuery);
-  discs.find(findQuery).toArray((err, items) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send(err);
-      return
-    };
-    res.status(200).send(items);
-  });
+
+  discs.find(findQuery)
+          .sort({ Manufacturer: 1})
+          .toArray((err, items) => {
+            if (err) {
+              console.error(err);
+              res.status(500).send(err);
+              return
+            };
+            res.status(200).send(items);
+          });
 });
 
 
