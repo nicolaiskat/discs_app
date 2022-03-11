@@ -30,7 +30,7 @@ router.get("/", (req, res) => {
   var findQuery = convertIntObj(urlQuery);
 
   discs.find(findQuery)
-          .sort({ Manufacturer: 1})
+          .sort({ Manufacturer: 1, Speed: 1, Glide: 1, Turn: 1, Fade: 1})
           .toArray((err, items) => {
             if (err) {
               console.error(err);
@@ -63,11 +63,10 @@ router.post("/", (req, res) => {
           Manufacturer: body.Manufacturer,
           ["Disc Name"]: body["Disc Name"],
           Type: body.Type,
-          Speed: parseInt(body.Speed),
-          Glide: parseInt(body.Glide),
-          Turn: parseInt(body.Turn),
-          Fade: parseInt(body.Fade),
-          ["Production Date"]: body["Production Date"],
+          Speed: parseFloat(body.Speed),
+          Glide: parseFloat(body.Glide),
+          Turn: parseFloat(body.Turn),
+          Fade: parseFloat(body.Fade)
       }, 
       (err, result) => {
       if (err) {

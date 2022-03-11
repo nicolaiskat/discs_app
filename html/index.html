@@ -1,0 +1,107 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="css/style.css">
+
+    </head>
+    <body>
+        <div id="header">
+            <img src="https://discimport.dk/cache/8/6/2/2/0/7/fit-350x100x100.webp">
+          </div>
+            <div id="navbar"> 
+              <ul> 
+              <li><a href="index.html">Indsæt data</a></li> 
+              <li><a href="list.html">Se alle discs</a></li> 
+              <li><a href="search.html">Søg i discs</a></li> 
+              <li><a href="visu.html">Link 4</a></li> 
+              <li><a href="taske.html">Link 5</a></li> 
+              </ul> 
+            </div> 
+      
+        <div class="inputBox">
+            <h4>Manufacturers:</h4>
+        <select id="manu" name="manufacturers" onchange="success()" required>
+            <option id="disabled" value="" disabled selected >Vælg Manufacturer</option> 
+            <option value="Axiom">Axiom</option>
+            <option value="Discmania">Discmania</option>
+            <option value="Discraft">Discraft</option>
+            <option value="Dynamic Discs">Dynamic Discs</option>
+            <option value="Innova">Innova</option>
+            <option value="Kastaplast">Kastaplast</option>
+            <option value="Latitude 64">Latitude 64</option>
+            <option value="Løft">Løft</option>
+            <option value="Mint Discs">Mint Discs</option>
+            <option value="MVP">MVP</option>
+            <option value="Prodigy">Prodigy</option>
+            <option value="Prodiscus">Prodiscus</option>
+            <option value="Streamline">Streamline</option>
+            <option value="Westside">Westside</option>
+        </select>
+        <h4>Disc Name:</h4>
+        <input id="disc_name" type="text" onkeyup="success()" placeholder="Indsæt Disc Name">
+        <h4>Type:</h4>
+        <select id="type" name="type" onchange="success()" required>
+            <option id="disabled" value="" disabled selected >Vælg Type</option>
+            <option value="Putter">Putter</option>
+            <option value="Midrange">Midrange</option>
+            <option value="Fairway">Fairway</option>
+            <option value="Distance">Distance</option>
+        </select>
+        <h4>Speed:</h4>        
+        <input id="speed" type="number" onkeyup="success()" placeholder="Indsæt Speed">
+        <h4>Glide:</h4>
+        <input id="glide" type="number" onkeyup="success()" placeholder="Indsæt Glide">
+        <h4>Turn:</h4>
+        <input id="turn" type="number" onkeyup="success()" placeholder="Indsæt Turn">
+        <h4>Fade:</h4>
+        <input id="fade" type="number" onkeyup="success()" placeholder="Indsæt Fade">
+
+        <button id="postD" disabled onclick="postData(document.getElementById('manu').value,document.getElementById('disc_name').value,document.getElementById('type').value,document.getElementById('speed').value,document.getElementById('glide').value,document.getElementById('turn').value,document.getElementById('fade').value)">Tilføj disc</button>
+        
+    </div>
+    </body>
+    <script>
+
+        function postData(ma, na, ty, sp, gl, tu, fa) {
+            
+            console.log(ma, na, sp, gl, tu, fa);          
+
+            if (ma != null && na != null && gl != null && tu != null && fa != null){
+
+            let url = "http://localhost:3000/api/discs";
+
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", url);
+
+            xhr.setRequestHeader("Accept", "application/json");
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    console.log(xhr.responseText);
+                }};
+
+            let data = `{
+                "Manufacturer": "${ma}",
+                "Disc Name": "${na}",
+                "Type": "${ty}",
+                "Speed": ${sp},
+                "Glide": ${gl},
+                "Turn": ${tu},
+                "Fade": ${fa}
+            }`;
+            console.log(data)
+            xhr.send(data);
+
+            location.reload();
+        }
+      }
+
+      function success() {
+	 if(document.getElementById("manu").value==="" || document.getElementById("disc_name").value==="" || document.getElementById("type").value==="" || document.getElementById("speed").value==="" || document.getElementById("glide").value==="" || document.getElementById("turn").value==="" || document.getElementById("fade").value==="")   { 
+            document.getElementById('postD').disabled = true; 
+        } else { 
+            document.getElementById('postD').disabled = false;
+        }
+    }
+    </script>
+</html>
