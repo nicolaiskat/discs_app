@@ -164,12 +164,11 @@
                 var tabCell = tr.insertCell(-1);
                 tabCell.innerHTML = data[i][col[j]];
                 
-                if (j > 0){
-                    val = val + data[i][col[j]] + ", ";
+                if (j == 0){
+                    val = val + data[i][col[j]]
                 }
             }
             var tCell = tr.insertCell(-1);
-            console.log(val)
             var valInsert = "<button onclick='f1(this)' value=" + val  +">Tilføj til taske</button>"
             tCell.innerHTML = valInsert;
         }
@@ -204,8 +203,42 @@
             makeQueryData(query)
     }
 
-    function f1(objButton){  
-        alert(objButton.value);
+    function f1(objButton){
+
+        let desc = prompt("Skriv plastik og farve på discen", "Plastik Farve");
+
+        if (desc != null || desc != "" || desc != "Plastik Farve"){
+            postData(desc, objButton.value);
+        }
     }
+
+    function postData(de, ref) {
+            
+            if (de != null && ref != null){
+
+            let url = "http://localhost:3000/api/mydiscs";
+
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", url);
+
+            xhr.setRequestHeader("Accept", "application/json");
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    console.log(xhr.responseText);
+                }};
+
+            let data = `{
+                "Description": "${de}",
+                "Ref_id": "${ref}"
+            }`;
+            console.log(data)
+            xhr.send(data);
+
+            // location.reload();
+        }
+      }
+
     </script>
 </html>
