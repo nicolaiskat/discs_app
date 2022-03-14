@@ -13,6 +13,7 @@
                 border-collapse: collapse;
                 padding: 2px 3px;
                 text-align: center;
+                background-color: whitesmoke;
             }
             th {
                 font-weight:bold;
@@ -213,7 +214,6 @@
     }
 
     function postData(de, ref) {
-            
             if (de != null && ref != null){
 
             let url = "http://localhost:3000/api/mydiscs";
@@ -228,10 +228,12 @@
                 if (xhr.readyState === 4) {
                     console.log(xhr.responseText);
                 }};
+            
+            var Refid = new ObjectId(ref);
 
             let data = `{
                 "Description": "${de}",
-                "Ref_id": "${ref}"
+                "Ref_id": "${Refid}"
             }`;
             console.log(data)
             xhr.send(data);
