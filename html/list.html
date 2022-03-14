@@ -33,12 +33,10 @@
         <li><a href="index.html">Indsæt data</a></li> 
         <li><a href="list.html">Se alle discs</a></li> 
         <li><a href="search.html">Søg i discs</a></li> 
-        <li><a href="visu.html">Link 4</a></li> 
-        <li><a href="taske.html">Link 5</a></li> 
+        <li><a href="visu.html">Visualisering</a></li> 
+        <li><a href="taske.html">Taske</a></li> 
         </ul> 
       </div> 
-
-        <!-- <br><input type="button" onclick="makeTable()" value="Vis data" /><br> -->
         
         <p id="showData"></p>
     </body>
@@ -94,6 +92,7 @@
                 var tabCell = tr.insertCell(-1);
                 tabCell.innerHTML = data[i][col[j]];
             }
+            
         }
 
         // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
