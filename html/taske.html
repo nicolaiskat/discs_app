@@ -11,7 +11,7 @@
               border: solid 1px #AAA;
               border-collapse: collapse;
               padding: 3px 4px;
-              text-align: center;
+              text-align: left;
               background-color: whitesmoke;
           }
           th {
@@ -73,7 +73,7 @@
           const data = await fetchData();
           // EXTRACT VALUE FOR HTML HEADER. 
         // ('Book ID', 'Book Name', 'Category' and 'Price')
-        var col = ['Description', 'Manufacturer','Disc Name', 'Type', 'Speed', 'Glide', 'Turn', 'Fade'];
+        var col = ['Manufacturer', 'Disc Name','Description', 'Type', 'Speed', 'Glide', 'Turn', 'Fade'];
         // var col = []
         // for (var i = 0; i < data.length; i++) {
         //     for (var key in data[i]) {
@@ -114,11 +114,11 @@
         for (var i = 0; i < data.length; i++) {
             tr = table.insertRow(-1);
             var tabCell1 = tr.insertCell(-1);
-            tabCell1.innerHTML = data[i].Description;
+            tabCell1.innerHTML = data[i].orders_info.Manufacturer;
             var tabCell2 = tr.insertCell(-1);
-            tabCell2.innerHTML = data[i].orders_info.Manufacturer;
+            tabCell2.innerHTML = data[i].orders_info[ 'Disc Name' ];
             var tabCell3 = tr.insertCell(-1);
-            tabCell3.innerHTML = data[i].orders_info[ 'Disc Name' ];
+            tabCell3.innerHTML = data[i].Description;
             var tabCell4 = tr.insertCell(-1);
             tabCell4.innerHTML = data[i].orders_info.Type;
             var tabCell5 = tr.insertCell(-1);
