@@ -207,7 +207,6 @@
     function f1(objButton){
 
         let desc = prompt("Skriv plastik og farve på discen", "Plastik Farve");
-
         if (desc != null || desc != "" || desc != "Plastik Farve"){
             postData(desc, objButton.value);
         }
@@ -229,11 +228,10 @@
                     console.log(xhr.responseText);
                 }};
             
-            var Refid = new ObjectId(ref);
-
+            console.log(de);
             let data = `{
                 "Description": "${de}",
-                "Ref_id": "${Refid}"
+                "Ref_id": "${ref}"
             }`;
             console.log(data)
             xhr.send(data);
