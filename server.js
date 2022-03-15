@@ -2,6 +2,7 @@ const express = require("express");
 var cors = require("cors");
 const homeRoute = require("./routes/home");
 const discsRoute = require("./routes/discs");
+const myDiscsRoute = require("./routes/mydiscs");
 //const mydiscsRoute = require('./routes/mydiscs');
 
 const app = express();
@@ -15,7 +16,7 @@ app.use(cors({ origin: "*" }));
 app.use(express.static("public"));
 app.use("/", homeRoute);
 app.use("/api/discs", discsRoute);
-//app.use('/api/mydiscs', mydiscsRoute);
+app.use("/api/mydiscs", myDiscsRoute);
 
 //STARTING APP ON SPECIFIED PORT
 const port = 3000;
