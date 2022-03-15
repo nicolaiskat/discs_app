@@ -1,0 +1,155 @@
+body {
+    background-color: rgb(232, 232, 232);
+    font-family: Verdana;
+    text-transform: uppercase;
+  }
+  
+  h1 {
+    color: navy;
+    margin-left: 20px;
+  }
+
+  .inputBox {
+      margin-left:auto;
+      margin-right: auto;
+      margin-top: 1%;
+      margin-bottom: 2%;
+      position: relative;
+      width: 25%;
+      border: solid 1px #AAA;
+      border-collapse: collapse;
+      padding-bottom: 2%;
+      background-color: #dfdfdf;
+      justify-content: center;
+  }
+
+  .inputBox input {
+      width: 90%;
+      margin-left: 5%;
+  }
+
+  .inputBox select {
+    width: 90%;
+    margin-left: 5%;
+}
+
+  .inputBox h4 {
+      text-align: center;
+      font-family: 'Spartan';
+      font-size: 14px;
+  }
+
+  .inputBox button {
+      margin-left: auto;
+      margin-right: auto;
+  }
+
+  #postD {
+    margin-top: 8%;
+      margin-left: 40%;
+      
+  }
+
+  ::placeholder{
+    color: grey;
+  }
+
+  /* with the :focus here, we would show grey when not using the element */
+
+  select:invalid{
+    color: gray;
+  }
+
+  option{
+      color: black;
+  }
+
+  #navbar {
+    width: 100%;
+    border-width: 1px;
+    border-color: #000;
+    border-style: solid;
+    font-family: 'Source Sans Pro',sans-serif;
+    text-transform: uppercase;
+  }
+
+  #navbar ul { 
+    margin: 0; 
+    padding: 5px; 
+    list-style-type: none; 
+    text-align: center; 
+    background-color: whitesmoke;
+    } 
+   
+  #navbar ul li {  
+    display: inline; 
+    } 
+   
+  #navbar ul li a { 
+    text-decoration: none; 
+    padding: .2em 1em; 
+    color: #333; 
+    background-color: whitesmoke; 
+    font-size: 14px;
+    /* #cc181c */
+    
+    } 
+   
+  #navbar ul li a:hover { 
+    color: #000; 
+    background-color: #fff; 
+    } 
+
+    #header {
+      margin-left: -5%;
+      width: 110%;
+      margin-left: auto;
+      margin-right: auto;
+      justify-content: center;
+    }
+
+    #header img {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .searchBox {
+      margin-left:auto;
+      margin-right: auto;
+      position: flex;
+      width: 95%;
+      border: 0.1px solid black;
+      padding: 10px;
+      background-color: rgb(248, 248, 248);
+
+  }
+
+  .searchBox input {
+      width: 13%;
+  }
+
+  .searchBox select {
+    width: 13%  ;
+    padding-left: 1px;
+    padding-right: 1px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-width: 1px;
+    border-style: inset;
+    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+}
+
+  .searchBox h4 {
+      text-align: center;
+      font-family: 'Spartan';
+      font-size: 17px;
+  }
+
+  .searchBox button {
+      margin-left: auto;
+      margin-right: auto;
+  }
+
+  #h2div {
+    text-align: center;
+  }
