@@ -1,8 +1,10 @@
 const express = require("express");
-const ObjectId = require('mongodb').ObjectId;
+const ObjectId = require("mongodb").ObjectId;
 const mongo = require("mongodb").MongoClient;
-require('dotenv/config');
+require("dotenv/config");
 
+//PREDEFINING COLLECTION AND DATABASE WE CANT TO ACCESS
+// + EMPTY VARIABLES FOR SAVING COLLECTION AND DATABASE AS GLOBALS
 let collection = "discs";
 let database = "alldiscsdb";
 let db, discs;
@@ -16,108 +18,97 @@ mongo.connect(
   (err, client) => {
     if (err) {
       console.error(err);
-      return
-    };
+      return;
+    }
     db = client.db(database);
     discs = db.collection(collection);
   }
 );
 const router = express.Router();
 
-//Get disc by find query
+//GET ALL DISCS FROM QUERY
 router.get("/", (req, res) => {
-  var urlQuery = require('url').parse(req.url,true).query;
+  //DEFINING QUERY FROM THE URL
+  var urlQuery = require("url").parse(req.url, true).query;
   var findQuery = convertIntObj(urlQuery);
 
-  discs.find(findQuery)
-          .sort({ Manufacturer: 1, Speed: 1, Glide: 1, Turn: 1, Fade: 1})
-          .toArray((err, items) => {
-            if (err) {
-              console.error(err);
-              res.status(500).send(err);
-              return
-            };
-            res.status(200).send(items);
-          });
+  //RETURN ALL DISCS WITH SPECIFIED SORTINGS
+  discs
+    .find(findQuery)
+    .sort({ Manufacturer: 1, Speed: 1, Glide: 1, Turn: 1, Fade: 1 })
+    .toArray((err, items) => {
+      if (err) {
+        console.error(err);
+        //IF ERROR: SENDING INTERNAL SERVER ERROR
+        res.status(500).send(err);
+        return;
+      }
+      //SENDING SUCCESS AND ALL FOUND ITEMS
+      res.status(200).send(items);
+    });
 });
 
-
-//Get disc by id
+//RETURN DISC BY ID
 router.get("/:id", (req, res) => {
   discs.find({ _id: new ObjectId(req.params.id) }).toArray((err, items) => {
     if (err) {
       console.error(err);
+      //IF ERROR: SENDING INTERNAL SERVER ERROR
       res.status(500).send(err);
-      return
-    };
+      return;
+    }
+    //SENDING SUCCESS AND ALL FOUND ITEM
     res.status(200).send(items[0]);
   });
 });
 
-
-//Post to discs
+//POSTING SINGLE DISCS
 router.post("/", (req, res) => {
-  const body = req.body
+  const body = req.body;
   discs.insertOne(
-      { 
-          Manufacturer: body.Manufacturer,
-          ["Disc Name"]: body["Disc Name"],
-          Type: body.Type,
-          Speed: parseFloat(body.Speed),
-          Glide: parseFloat(body.Glide),
-          Turn: parseFloat(body.Turn),
-          Fade: parseFloat(body.Fade)
-      }, 
-      (err, result) => {
+    {
+      Manufacturer: body.Manufacturer,
+      ["Disc Name"]: body["Disc Name"],
+      Type: body.Type,
+      Speed: parseFloat(body.Speed),
+      Glide: parseFloat(body.Glide),
+      Turn: parseFloat(body.Turn),
+      Fade: parseFloat(body.Fade),
+    },
+    (err, result) => {
       if (err) {
-          console.error(err);
-          res.status(500).send(err);
-          return
-      };
+        //IF ERROR: SENDING INTERNAL SERVER ERROR
+        console.error(err);
+        res.status(500).send(err);
+        return;
+      }
       console.log(result);
-      res.status(200).json({ 
-          ok: true,
-          object: result
-        });
-  });
+      //SENDING SUCCESS AND RETURNS ITEM CREATED
+      res.status(200).json({
+        ok: true,
+        object: result,
+      });
+    }
+  );
 });
-
 
 //Delete disc by id
 router.delete("/:id", (req, res) => {
   const result = discs.deleteOne({ _id: new ObjectId(req.params.id) });
+  //SENDING SUCCESS WITH NO CONTENT
   if (result) res.status(204).send("Succesfully deleted");
+  //IF ERROR: SENDING INTERNAL SERVER ERROR
   else res.status(500).send("Disc not found");
 });
 
 module.exports = router;
 
-
-//Helping functions
-function toTitleCase(str) {
-  return str.replace(
-    /\w\S*/g,
-    function(txt) {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    }
-  );
-}
-
-function isEmpty(obj) {
-  for(var prop in obj) {
-    if(Object.prototype.hasOwnProperty.call(obj, prop)) {
-      return false;
-    }
-  }
-
-  return JSON.stringify(obj) === JSON.stringify({});
-}
-
+//EXPORTING ROUTER TO MODULE FOR USE IN SERVER.JS
 function convertIntObj(obj) {
-  const res = {}
+  const res = {};
   for (const key in obj) {
-      var keyInt = isNaN(parseInt(obj[key])) ? obj[key] : parseInt(obj[key]);
-      res[key] = keyInt;
+    var keyInt = isNaN(parseInt(obj[key])) ? obj[key] : parseInt(obj[key]);
+    res[key] = keyInt;
   }
   return res;
 }
