@@ -1,6 +1,5 @@
 const express = require("express");
 const fs = require("fs");
-const path = require("path");
 const urlPath = fs.realpathSync("public");
 
 const router = express.Router();
