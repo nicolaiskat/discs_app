@@ -5,8 +5,8 @@ const urlPath = fs.realpathSync("public");
 const router = express.Router();
 
 //READING HTML PAGE FROM REQUESTED URL
-router.get(["/", "/index"], (req, res) => {
-  fs.readFile(urlPath + "/index.html", "utf8", function (err, content) {
+router.get(["/insert"], (req, res) => {
+  fs.readFile(urlPath + "/insert.html", "utf8", function (err, content) {
     res.send(content);
   });
 });
